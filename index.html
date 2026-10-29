@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ismail Zidan — Performance Media Buyer</title>
+<meta name="description" content="Performance Media Buyer portfolio — data, creative, testing, and strategic decision-making behind paid media results." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ismail Zidan — Performance Media Buyer">
+<meta property="og:description" content="I don't just manage ad accounts. I investigate problems, find patterns, test hypotheses, and scale what actually works.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231D1E1D'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%230B8055'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:       #1D1E1D;
+  --bg-2:     #151716;
+  --bg-3:     #101211;
+  --accent:   #0B8055;
+  --accent-2: #087A50;
+  --accent-dim: rgba(11,128,85,.14);
+  --text:     #ECEBE6;
+  --text-soft:#A6A9A4;
+  --muted:    #6C6F6A;
+  --line:     #2A2C2A;
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body:    'Work Sans', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --container: 1240px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--font-body); font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+::selection{ background:var(--accent); color:#0C0D0C; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); margin:0; font-weight:700; letter-spacing:-0.01em; }
+p{ margin:0; }
+
+.wrap{ max-width:var(--container); margin:0 auto; padding:0 clamp(20px,5vw,72px); }
+.label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+.label-muted{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-soft); }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+
+#loader{
+  position:fixed; inset:0; z-index:2000; background:var(--bg-3);
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding:clamp(20px,5vw,72px);
+  transition:transform .8s cubic-bezier(.76,0,.24,1);
+}
+#loader.done{ transform:translateY(-100%); }
+#loader .loader-top{ font-family:var(--font-mono); font-size:12px; color:var(--text-soft); letter-spacing:.1em; }
+#loader .loader-mid{ display:flex; align-items:baseline; gap:18px; }
+#loader .loader-name{ font-family:var(--font-display); font-size:clamp(28px,5vw,48px); }
+#loader .loader-step{ font-family:var(--font-mono); font-size:clamp(28px,5vw,48px); color:var(--accent); font-variant-numeric:tabular-nums; }
+#loader .loader-bar{ height:1px; width:100%; background:var(--line); position:relative; }
+#loader .loader-bar-fill{ position:absolute; inset:0; width:0%; background:var(--accent); }
+
+.cursor-dot,.cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:2100; border-radius:50%; transform:translate(-50%,-50%); }
+.cursor-dot{ width:5px; height:5px; background:var(--text); }
+.cursor-ring{
+  width:30px; height:30px; border:1px solid var(--text-soft);
+  display:flex; align-items:center; justify-content:center;
+  transition:width .25s ease,height .25s ease,border-color .25s ease,background .25s ease;
+}
+.cursor-ring span{ font-family:var(--font-mono); font-size:9px; letter-spacing:.08em; color:var(--bg); opacity:0; transition:opacity .2s ease; }
+.cursor-ring.is-active{ width:58px; height:58px; border-color:var(--accent); background:var(--accent); }
+.cursor-ring.is-active span{ opacity:1; }
+.no-touch body,.no-touch a,.no-touch button{ cursor:none; }
+@media (max-width:900px){ .cursor-dot,.cursor-ring{ display:none !important; } .no-touch body{ cursor:auto; } }
+
+#scroll-progress{ position:fixed; top:0; left:0; height:2px; background:var(--accent); z-index:1000; width:0%; }
+header.site-nav{
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  padding:26px clamp(20px,5vw,72px); display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid transparent; transition:padding .4s ease,background .4s ease,border-color .4s ease;
+}
+header.site-nav.scrolled{
+  padding:16px clamp(20px,5vw,72px); background:rgba(21,23,22,.82);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-color:var(--line);
+}
+.nav-mark{ font-family:var(--font-display); font-size:15px; letter-spacing:.02em; }
+.nav-links{ display:flex; align-items:center; gap:38px; list-style:none; margin:0; padding:0; }
+.nav-links a{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-soft); position:relative; padding-bottom:4px; }
+.nav-links a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent); transition:width .3s ease; }
+.nav-links a.active,.nav-links a:hover{ color:var(--text); }
+.nav-links a.active::after,.nav-links a:hover::after{ width:100%; }
+.nav-cta{ font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:10px 18px; border:1px solid var(--line); border-radius:2px; transition:border-color .3s ease,color .3s ease; }
+.nav-cta:hover{ border-color:var(--accent); color:var(--accent); }
+@media (max-width:900px){ .nav-links{ display:none; } }
+
+.nav-actions{ display:flex; align-items:center; gap:14px; }
+.nav-whatsapp{
+  width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line); border-radius:50%;
+  background:#fff;
+  transition:border-color .3s ease, background .3s ease, transform .25s ease;
+}
+.nav-whatsapp svg{ width:28px; height:28px; fill:#25D366; transition:fill .3s ease, transform .3s ease; }
+.nav-whatsapp:hover{ border-color:#25D366; background:#fff; transform:translateY(-2px); box-shadow:0 6px 16px rgba(37,211,102,.35); }
+.nav-whatsapp:hover svg{ transform:scale(1.08); }
+
+.hero{ min-height:100svh; display:flex; align-items:center; padding-top:120px; position:relative; }
+.hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; width:100%; }
+.hero h1{ font-size:clamp(46px,7vw,88px); line-height:.98; letter-spacing:-0.02em; }
+.hero h1 .role{ display:block; color:var(--accent); font-size:.42em; letter-spacing:.06em; margin-top:14px; }
+.hero-statement{ max-width:520px; font-size:clamp(17px,1.6vw,20px); color:var(--text-soft); margin-top:30px; }
+.hero-actions{ display:flex; gap:16px; margin-top:46px; flex-wrap:wrap; }
+.btn{ position:relative; display:inline-flex; align-items:center; gap:10px; padding:15px 26px; border-radius:2px; font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--line); transition:border-color .3s ease,background .3s ease,color .3s ease; }
+.btn-primary{ background:var(--text); color:var(--bg-3); border-color:var(--text); }
+.btn-primary:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+.magnetic{ transition:transform .25s cubic-bezier(.2,.8,.2,1); }
+
+.hero-visual{ position:relative; height:min(50vh,440px); }
+.hero-visual canvas{ width:100%; height:100%; display:block; }
+.hero-visual .visual-note{ position:absolute; bottom:-8px; left:0; font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; }
+
+section{ padding:min(12vw,140px) 0; position:relative; }
+.section-alt{ background:var(--bg-2); }
+.section-deep{ background:var(--bg-3); }
+.section-head{ display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:60px; align-items:end; }
+.section-head h2{ font-size:clamp(32px,4.4vw,52px); letter-spacing:-0.02em; }
+.section-head p{ color:var(--text-soft); max-width:420px; justify-self:end; }
+@media (max-width:900px){ .section-head{ grid-template-columns:1fr; } .section-head p{ justify-self:start; } }
+
+.reveal{ opacity:0; transform:translateY(26px); }
+.reveal.is-visible{ opacity:1; transform:translateY(0); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.split-line{ overflow:hidden; }
+.split-word{ display:inline-block; transform:translateY(110%); opacity:0; }
+
+.statement h2{ font-size:clamp(38px,7vw,86px); line-height:1.02; letter-spacing:-0.02em; }
+.statement p{ margin-top:34px; max-width:560px; color:var(--text-soft); font-size:clamp(16px,1.6vw,19px); }
+
+.metrics-row{ display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); }
+.metric{ padding:34px 20px 0; border-right:1px solid var(--line); }
+.metric:last-child{ border-right:none; }
+.metric .m-val{ font-family:var(--font-mono); font-size:clamp(30px,4vw,46px); color:var(--text); }
+.metric .m-lbl{ margin-top:10px; }
+@media (max-width:900px){ .metrics-row{ grid-template-columns:repeat(2,1fr); } .metric{ border-right:none; border-bottom:1px solid var(--line); padding-bottom:26px; } }
+
+.filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:56px; }
+.filter-row button{ border:1px solid var(--line); padding:9px 18px; border-radius:2px; font-family:var(--font-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-soft); transition:border-color .3s ease,color .3s ease,background .3s ease; }
+.filter-row button.active{ border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
+
+.cs-card{ border-top:1px solid var(--line); padding:48px 0; display:grid; grid-template-columns:.85fr 1.15fr; gap:44px; transition:opacity .35s ease; }
+.cs-card:last-child{ border-bottom:1px solid var(--line); }
+.cs-card.hidden-by-filter{ display:none; }
+.cs-media{ aspect-ratio:16/11; border:1px solid var(--line); background:var(--bg-3); position:relative; overflow:hidden; }
+.cs-media canvas{ width:100%; height:100%; }
+.cs-num{ position:absolute; top:14px; left:16px; font-family:var(--font-mono); font-size:12px; color:var(--muted); }
+.cs-media img.cs-img{
+  width:100%; height:100%;
+  object-fit:cover;      
+  display:block;
+}
+.cs-num{ z-index:2; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+
+
+
+
+
+
+.cs-info .label-muted{ margin-right:14px; }
+.cs-info h3{ font-size:clamp(26px,3vw,38px); margin-top:14px; }
+.cs-objective{ color:var(--text-soft); margin-top:14px; max-width:480px; }
+.cs-result{ margin-top:22px; display:flex; align-items:baseline; gap:10px; }
+.cs-result .val{ font-family:var(--font-mono); color:var(--accent); font-size:22px; }
+.cs-open{ margin-top:26px; display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; border-bottom:1px solid var(--text); padding-bottom:3px; transition:border-color .3s ease,color .3s ease; }
+.cs-open:hover{ color:var(--accent); border-color:var(--accent); }
+@media (max-width:900px){ .cs-card{ grid-template-columns:1fr; } }
+
+.pill{
+  border:1px solid var(--line);
+  padding:13px 24px;
+  border-radius:100px;
+  font-family:var(--font-mono);
+  font-size:13px;
+  letter-spacing:.02em;
+  color:var(--text-soft);
+  transition:border-color .3s ease, color .3s ease, background .3s ease;
+}
+.pill:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--accent-dim);
+}
+.pill.is-placeholder{ border-style:dashed; color:var(--muted); }
+
+.process-row{ display:flex; flex-wrap:wrap; gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.process-step{ flex:1 1 160px; padding:26px 20px; border-right:1px solid var(--line); position:relative; }
+.process-step:last-child{ border-right:none; }
+.process-step .p-idx{ font-family:var(--font-mono); font-size:11px; color:var(--accent); }
+.process-step h4{ font-size:16px; margin-top:10px; font-weight:600; }
+.process-step::after{ content:'→'; position:absolute; right:-2px; top:50%; transform:translateY(-50%); color:var(--muted); font-family:var(--font-mono); font-size:12px; }
+.process-step:last-child::after{ content:''; }
+@media (max-width:900px){ .process-step{ flex:1 1 45%; border-right:none; border-bottom:1px solid var(--line); } .process-step::after{ display:none; } }
+
+.about-cols{ display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:56px; }
+.about-cols p{ color:var(--text-soft); }
+@media (max-width:900px){ .about-cols{ grid-template-columns:1fr; } }
+
+.think-list{ display:flex; flex-direction:column; }
+.think-item{ border-top:1px solid var(--line); padding:40px 0; display:grid; grid-template-columns:70px 1fr; gap:24px; }
+.think-item:last-child{ border-bottom:1px solid var(--line); }
+.think-item h3{ font-size:clamp(24px,3.4vw,40px); line-height:1.15; }
+@media (max-width:700px){ .think-item{ grid-template-columns:1fr; } }
+
+.pill-row{ display:flex; gap:12px; flex-wrap:wrap; }
+.pill{ border:1px solid var(--line); padding:11px 20px; border-radius:100px; font-family:var(--font-mono); font-size:12px; color:var(--text-soft); transition:border-color .3s ease,color .3s ease; }
+.pill:hover{ border-color:var(--accent); color:var(--accent); }
+.pill.is-placeholder{ border-style:dashed; color:var(--muted); }
+
+.test-row{ display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.test-step{ padding:30px 18px; border-right:1px solid var(--line); }
+.test-step:last-child{ border-right:none; }
+.test-step .label{ display:block; margin-bottom:10px; }
+.test-step p{ color:var(--text-soft); font-size:14px; }
+@media (max-width:900px){ .test-row{ grid-template-columns:1fr 1fr; } .test-step{ border-bottom:1px solid var(--line); } }
+
+.contact-head h2{ font-size:clamp(38px,7vw,84px); line-height:1.02; }
+.contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:70px; }
+.contact-links a{ padding:20px 0; border-top:1px solid var(--line); font-size:19px; display:flex; justify-content:space-between; align-items:center; transition:padding-left .3s ease,color .3s ease; }
+.contact-links a:last-child{ border-bottom:1px solid var(--line); }
+.contact-links a:hover{ padding-left:14px; color:var(--accent); }
+.contact-links small{ font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+.field{ position:relative; margin-bottom:30px; }
+.field input,.field textarea{ width:100%; background:none; border:none; border-bottom:1px solid var(--line); color:var(--text); font-family:var(--font-body); font-size:16px; padding:14px 0 10px; outline:none; resize:none; transition:border-color .3s ease; }
+.field label{ position:absolute; left:0; top:14px; color:var(--muted); pointer-events:none; transition:transform .25s ease,font-size .25s ease,color .25s ease; }
+.field input:focus,.field textarea:focus{ border-color:var(--accent); }
+.field input:focus + label,.field input:not(:placeholder-shown) + label,
+.field textarea:focus + label,.field textarea:not(:placeholder-shown) + label{ transform:translateY(-20px); font-size:11px; color:var(--accent); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.05em; }
+.form-note{ font-size:12px; color:var(--muted); margin-top:6px; }
+.submit-btn{ margin-top:6px; background:var(--accent); color:#08110d; padding:14px 28px; border-radius:2px; font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+@media (max-width:900px){ .contact-grid{ grid-template-columns:1fr; gap:40px; } }
+
+footer{ border-top:1px solid var(--line); padding:34px 0; }
+.footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.footer-row .label-muted{ font-size:11px; }
+#back-to-top{ width:38px; height:38px; border:1px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:border-color .3s ease; }
+#back-to-top:hover{ border-color:var(--accent); }
+#back-to-top svg{ width:13px; height:13px; }
+
+.overlay{ position:fixed; inset:0; z-index:1600; background:var(--bg); overflow-y:auto; clip-path:circle(0% at 92% 8%); transition:clip-path .7s cubic-bezier(.76,0,.24,1); pointer-events:none; }
+.overlay.open{ clip-path:circle(150% at 92% 8%); pointer-events:auto; }
+.overlay-close{ position:fixed; top:24px; right:clamp(20px,5vw,72px); z-index:1601; width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:var(--bg); display:flex; align-items:center; justify-content:center; }
+.overlay-close svg{ width:15px; height:15px; }
+.overlay-inner{ max-width:920px; margin:0 auto; padding:110px clamp(20px,5vw,72px) 110px; }
+
+.cs-screens{ display:flex; gap:10px; margin-bottom:52px; }
+.cs-screens button{ font-family:var(--font-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-soft); border:1px solid var(--line); padding:9px 16px; border-radius:2px; }
+.cs-screens button.active{ color:var(--accent); border-color:var(--accent); }
+.cs-screen{ display:none; }
+.cs-screen.active{ display:block; }
+
+.cs-title-row{ display:flex; gap:16px; flex-wrap:wrap; align-items:baseline; }
+.cs-title-row h2{ font-size:clamp(30px,4vw,48px); margin-top:16px; }
+.cs-headline{ font-family:var(--font-display); font-size:clamp(24px,3vw,36px); line-height:1.2; margin-top:30px; max-width:680px; }
+.cs-textblock{ margin-top:34px; max-width:640px; }
+.cs-textblock h4{ margin-bottom:10px; }
+.cs-textblock p{ color:var(--text-soft); }
+
+.cs-metric-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:44px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.cs-metric{ padding:26px 20px; border-right:1px solid var(--line); }
+.cs-metric:last-child{ border-right:none; }
+.cs-metric .val{ font-family:var(--font-mono); font-size:clamp(22px,3vw,32px); color:var(--accent); }
+@media (max-width:700px){ .cs-metric-row{ grid-template-columns:1fr; } .cs-metric{ border-right:none; border-bottom:1px solid var(--line); } }
+
+.chain{ margin-top:10px; }
+.chain-step{ padding:28px 0; border-top:1px solid var(--line); position:relative; }
+.chain-step:last-child{ border-bottom:1px solid var(--line); }
+.chain-step .label{ display:block; margin-bottom:10px; }
+.chain-step p{ color:var(--text-soft); max-width:600px; }
+.chain-step:not(:last-child)::after{ content:'↓'; position:absolute; left:0; bottom:-16px; color:var(--muted); font-family:var(--font-mono); font-size:12px; }
+.cs-headline-quote{ font-family:var(--font-display); font-size:clamp(22px,2.8vw,32px); line-height:1.25; margin-top:10px; max-width:640px; }
+
+.evidence-frame{ border:1px solid var(--line); background:var(--bg-3); padding:22px; margin-top:20px; }
+.evidence-surface{ background:#fff; min-height:220px; display:flex; align-items:center; justify-content:center; border:1px dashed #C9CCC8; }
+.evidence-surface span{ font-family:var(--font-mono); font-size:12px; color:#8A8D89; text-transform:uppercase; letter-spacing:.05em; }
+.evidence-caption{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:14px; font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+
+.creative-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:30px; }
+.creative-card{ border:1px solid var(--line); padding:20px; }
+.creative-card .cc-tag{ margin-bottom:14px; }
+.creative-card .cc-surface{ aspect-ratio:4/5; background:var(--bg-3); border:1px dashed var(--line); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.creative-card .cc-surface span{ font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; }
+
+.creative-card .cc-surface img{ width:100%; height:100%; object-fit:cover; }
+
+.creative-card dl{ margin:0; font-size:13px; color:var(--text-soft); }
+.creative-card dt{ font-family:var(--font-mono); font-size:10px; color:var(--muted); text-transform:uppercase; margin-top:10px; }
+.creative-card dd{ margin:2px 0 0; }
+@media (max-width:900px){ .creative-grid{ grid-template-columns:1fr; } }
+
+
+.cs-result-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:20px; }
+.cs-result-row .r-item{ padding:20px 0; border-top:1px solid var(--line); }
+.cs-result-row .r-item .val{ font-family:var(--font-mono); font-size:clamp(26px,3.4vw,38px); color:var(--accent); }
+@media (max-width:700px){ .cs-result-row{ grid-template-columns:1fr; } }
+
+
+
+
+
+.learning-signals{ margin-top:26px; display:flex; flex-direction:column; }
+.learning-signal{ padding:20px 0; border-top:1px solid var(--line); }
+.learning-signal:last-child{ border-bottom:1px solid var(--line); }
+.learning-signal .ls-tag{ display:flex; align-items:baseline; gap:10px; margin-bottom:8px; }
+.learning-signal .ls-num{ font-family:var(--font-mono); font-size:12px; color:var(--accent); }
+.learning-signal .ls-title{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--text); }
+.learning-signal p{ color:var(--text-soft); margin:0; }
+
+.ar{
+  display:inline-block;
+  unicode-bidi:isolate;
+  font-family:'Segoe UI', Tahoma, 'Noto Naskh Arabic', sans-serif;
+  color:var(--text);
+  font-size:1.05em;
+}
+.chain-step p{ line-height:1.9; }
+
+
+@media (max-width:900px){
+  body{ font-size:17px; }
+
+  .label, .label-muted{ font-size:13px; }
+  .nav-cta{ font-size:13px; padding:12px 18px; }
+  .btn{ font-size:14px; padding:16px 26px; }
+  .filter-row button{ font-size:13px; padding:11px 18px; }
+.cs-open{ font-size:16px; padding:16px 26px; border:1px solid var(--accent); color:var(--accent); border-radius:2px; margin-top:30px; }
+
+  .cs-screens button{ font-size:13px; padding:11px 16px; }
+  .cs-objective{ font-size:17px; }
+  .cs-metric .val{ font-size:28px; }
+  .cs-result-row .r-item .val{ font-size:32px; }
+  .metric .m-lbl{ font-size:14px !important; }
+  .metric .m-val{ font-size:36px; }
+  .pill{ font-size:14px; padding:12px 20px; }
+  .contact-links small{ font-size:13px; }
+  .submit-btn{ font-size:14px; padding:16px 28px; }
+  .field input, .field textarea{ font-size:17px; }
+  .chain-step p{ font-size:17px; }
+  .cs-screens{ flex-wrap:wrap; }
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
+
+<!-- ============ LOADING SEQUENCE ============ -->
+<div id="loader">
+  <div class="loader-top">Ismail AbdelFattah Zidan— Performance Marketer-Media Buyer</div>
+  <div class="loader-mid">
+    <div class="loader-name">MEDIA BUYER</div>
+    <div class="loader-step" id="loaderStep">01</div>
+  </div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<header class="site-nav" id="siteNav">
+  <a href="#home" class="nav-mark" aria-label="Home"></a>
+  <nav>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work" class="nav-link" data-target="work">Work</a></li>
+      <li><a href="#thinking" class="nav-link" data-target="thinking">Thinking</a></li>
+      <li><a href="#contact" class="nav-link" data-target="contact">Contact</a></li>
+    </ul>
+  </nav>
+<div class="nav-actions">
+  <a href="#contact" class="nav-cta magnetic">Let's talk</a>
+
+
+
+
+ <a 
+    href="https://wa.me/201018824063?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20a%20project."
+    class="nav-whatsapp magnetic"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat on WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12.004 2C6.486 2 2 6.486 2 12.004c0 1.86.505 3.678 1.463 5.268L2 22l4.868-1.42a9.955 9.955 0 004.868 1.264h.005c5.518 0 10.004-4.486 10.004-10.005C21.745 6.32 17.522 2 12.004 2zm0 18.19h-.004a8.19 8.19 0 01-4.174-1.144l-.3-.178-3.104.906.83-3.03-.196-.31a8.186 8.186 0 01-1.256-4.43c0-4.523 3.68-8.202 8.208-8.202 2.192 0 4.252.854 5.802 2.406a8.15 8.15 0 012.402 5.803c0 4.524-3.68 8.18-8.208 8.18z"/>
+    </svg>
+  </a>
+</div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="reveal">Ismail Zidan<span class="role">Performance Marketer-Media Buyer</span></h1>
+        <p class="hero-statement reveal">Optimizing Funnels, Not Just Dashboards.</p>
+        <div class="hero-actions reveal">
+          <a href="#work" class="btn btn-primary magnetic">View case studies</a>
+          <a href="#contact" class="btn btn-ghost magnetic">Let's talk</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <canvas id="signalCanvas"></canvas>
+        <div class="visual-note"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATEMENT ============ -->
+  <section class="statement">
+    <div class="wrap">
+      <h2 class="reveal">I look beyond<br/> the campaign.</h2>
+      <p class="reveal">Running ads is easy. Understanding what makes them convert—and scaling it—is the real skill.</p>
+    </div>
+  </section>
+
+  <!-- ============ PERFORMANCE SNAPSHOT ============ -->
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="section-head"><h2 class="reveal">Performance snapshot</h2><p class="reveal">A snapshot of managed spend, sales, markets, and campaign volume.</p></div>
+      <div class="metrics-row reveal">
+        <div class="metric">
+          <div class="m-lbl label-muted" style="font-size:13px; margin-bottom:14px;">Ad spend</div>
+          <div class="m-val">$400K+</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl label-muted" style="font-size:13px; margin-bottom:14px;">Revenue/sales</div>
+          <div class="m-val">$2M+</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl label-muted" style="font-size:13px; margin-bottom:14px;">Markets</div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <span style="font-family:var(--font-body); font-size:15px; color:var(--text);">EGY</span>
+            <span style="font-family:var(--font-body); font-size:15px; color:var(--text);">KSA</span>
+            <span style="font-family:var(--font-body); font-size:15px; color:var(--text);">UAE</span>
+            <span style="font-family:var(--font-body); font-size:15px; color:var(--text);">QAT</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl label-muted" style="font-size:13px; margin-bottom:14px;">Clients</div>
+          <div class="m-val">57</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl label-muted" style="font-size:13px; margin-bottom:14px;">Campaigns</div>
+          <div class="m-val">500+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED CASE STUDIES ============ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head"><h2 class="reveal">Selected Case Studies</h2><p class="reveal">Looking beyond the dashboard. Discover the exact steps, funnel optimizations, and decisions used to scale these campaigns profitably.</p></div>
+      <div class="filter-row" id="filterRow">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="medical">Medical</button>
+        <button data-filter="e-commerce">E-commerce</button>
+        <button data-filter="real-estate">Real Estate</button>
+<button data-filter="services"> Services</button>
+
+
+      </div>
+      <div id="caseStudyList"><!-- rendered from the caseStudies data array via JS --></div>
+    </div>
+  </section>
+
+  <!-- ============ HOW I THINK ============ -->
+  <section class="section-deep" id="thinking">
+    <div class="wrap">
+      <div class="section-head"><h2 class="reveal">How I think</h2><p class="reveal">Strategy over tactics. Here are the core principles that drive my media buying decisions.
+
+</p></div>
+      <div class="think-list">
+        <div class="think-item reveal"><span class="label">01</span><h3>Diagnose the ultimate business goal before spending a single dollar.
+</h3></div>
+        <div class="think-item reveal"><span class="label">02</span><h3>A perfect ad cannot save a broken funnel. Map the journey first.
+</h3></div>
+        <div class="think-item reveal"><span class="label">03</span><h3>Let hard data dictate the execution, and ROI drive the scaling.</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+
+  <!-- ============ PLATFORMS ============ -->
+  
+  <section>
+  <div class="section-head" style="margin-bottom:44px; padding-left:clamp(20px,5vw,72px);">
+    <h2 class="reveal" style="white-space:nowrap; display:inline-block; font-size:clamp(1.8rem, 4.5vw, 3.2rem);">
+      <span style="opacity:0.9;">Media &amp; Analytics</span><span style="display:inline-block; margin:0 6px; opacity:0.4;"></span><span>Stack</span>
+    </h2>
+    <p class="reveal"> </p>
+  </div>
+
+    <div class="wrap">
+      <div class="pill-row reveal">
+        <span class="pill">Meta Ads</span>
+        <span class="pill">Snapchat Ads</span>
+        <span class="pill">TikTok Ads</span>
+        <span class="pill">GA4</span>
+        <span class="pill">GTM</span>
+        <span class="pill">Microsoft Clarity</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-head"><h2 class="reveal">Let's talk<br/></h2></div>
+      <div class="contact-grid">
+        <div class="contact-links reveal">
+          <a href="mailto:difture13@gmail.com"><span>Email</span><small>difture13@gmail.com</small></a>
+          <a href="https://www.linkedin.com/in/ismailzidan7/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><small>linkedin.com/in/ismailzidan7</small></a>
+          <a href="https://wa.me/201018824063" target="_blank" rel="noopener">
+            <span>WhatsApp</span>
+            <small style="font-size:16px; color:var(--text-soft);">Message me</small>
+          </a>
+        </div>
+
+        <form class="reveal" id="contactForm" action="https://formspree.io/f/mvkovwwo" method="POST" data-fetch>
+          <div class="field">
+            <input type="text" name="name" placeholder=" " required>
+            <label>Name</label>
+          </div>
+          <div class="field">
+            <input type="email" name="email" placeholder=" " required>
+            <label>Email</label>
+          </div>
+          <div class="field">
+            <textarea name="message" rows="3" placeholder=" " required></textarea>
+            <label>Message</label>
+          </div>
+          <button type="submit" class="submit-btn">Send message</button>
+          <p class="form-note"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div><div style="font-family:var(--font-display); font-size:14px;">Ismail Zidan</div><div class="label-muted" style="margin-top:4px;">Performance Media Buyer</div></div>
+        <div class="label-muted" id="year"></div>
+
+    <button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  </div>
+</footer>
+
+<!-- ============ CASE STUDY OVERLAY ============ -->
+<div class="overlay" id="csOverlay" data-overlay>
+  <button class="overlay-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <div class="overlay-inner">
+    <div class="cs-screens">
+      <button data-screen="0" class="active">01 — Context</button>
+      <button data-screen="1">02 — Discovery → Strategy</button>
+      <button data-screen="2">03 — Evidence → Result</button>
+    </div>
+
+    <div class="cs-screen active" data-screen-panel="0">
+      <div class="cs-title-row">
+        <span class="label" id="cs-industry"></span><span class="label-muted" id="cs-market"></span>
+      </div>
+      <h2 id="cs-client"></h2>
+      <p class="cs-headline" id="cs-headline"></p>
+      <div class="cs-textblock"><h4 class="label">Objective</h4><p id="cs-objective"></p></div>
+      <div class="cs-textblock"><h4 class="label">Problem</h4><p id="cs-problem"></p></div>
+      <div class="cs-metric-row" id="cs-metrics"></div>
+    </div>
+
+    <div class="cs-screen" data-screen-panel="1">
+
+      <div class="chain">
+        <div class="chain-step"><span class="label">The discovery</span><p id="cs-discovery"></p></div>
+<div class="chain-step" id="cs-insight-step"><p class="cs-headline-quote" id="cs-insight"></p></div>
+
+        <div class="chain-step"><span class="label">The hypothesis</span><p id="cs-hypothesis"></p></div>
+        <div class="chain-step"><span class="label">The decision</span><p id="cs-decision"></p></div>
+<div class="chain-step" data-field="strategy"><span class="label">The strategy</span><p id="cs-strategy"></p></div>
+
+
+        <div class="chain-step"><span class="label">The execution</span><p id="cs-execution"></p></div>
+      </div>
+
+<div class="creative-grid" id="cs-creatives"></div>
+
+
+
+
+    </div>
+
+    <div class="cs-screen" data-screen-panel="2">
+     
+     
+           <div class="evidence-frame" id="cs-ev2-frame">
+        <img id="cs-ev2-image" src="" alt="Evidence" style="width:100%; height:auto; display:block;">
+        <div class="evidence-caption"><span id="cs-ev2-caption"></span><span id="cs-ev2-date"></span></div>
+      </div>
+
+<h4 class="label" style="margin-top:44px; display:block;">Result</h4>
+<div class="cs-result-row" id="cs-results"></div>
+<div class="cs-textblock" style="margin-top:44px;">
+  <h4 class="label">Learning</h4>
+  <p class="cs-headline-quote" id="cs-learning" style="margin-top:0;"></p>
+  <div class="learning-signals" id="cs-learning-signals"></div>
+</div>
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isTouch = window.matchMedia('(pointer: coarse)').matches;
+  document.documentElement.classList.add(isTouch ? 'touch' : 'no-touch');
+
+  var caseStudies = [
+    {
+      id:"cs-01",
+      category:"real-estate",
+      client:"Maraasm Capital",
+
+      industry:"REAL ESTATE",
+      market:"Qatar",
+      cardImage:"Gemini_Generated_Image_.jpeg",
+      headline:"“QAR 87K+ in ad spend. 3,758 conversations generated. The real question: what made them efficient?”",
+
+      objective:"[ Reduce friction at the first step and make starting a conversation the entry point to the customer journey. ]",
+      problem:"[ Real estate is a high-consideration category. The creative needs to communicate the project's value quickly before asking the audience to take action. ]",
+
+      metrics: [
+  { label: "Leads / Conversations", value: "3,530 " },
+  { label: "Cost / Result", value: "24.84 QAR" },
+  { label: "Ad Spend", value: "87,689.60 QAR" }
+],
+
+
+
+      evidence1:{ caption:"[ Add caption ]", date:"[ Add date ]" },
+     
+     discovery: " What did the data reveal?The account relied heavily on static visuals and AI-generated videos, while customers were actively asking to see the real place. Some campaigns were reaching conversation costs of nearly QAR 50, creating a clear gap between what the audience wanted to see and what the ads were showing.",
+
+      hypothesis:"[ If we let prospects experience the real place before starting a conversation, authentic location-based content could reduce friction and improve conversation efficiency. ]",
+      decision:"[ We produced high-quality real-location videos and presenter-led content focused on the place, its experience, and available rental opportunities.]",
+      strategy:"[ Make the prospect experience the place visually before asking them to take action.]",
+      execution:"[We concentrated budget on Instagram, scaled winning creatives gradually, retested underperformers to understand why they lost, and continuously reallocated budget toward stronger performers.]",
+
+      evidence2:{ image:"maraasm real state.png", caption:"", date:"" },
+
+
+
+results: [
+  { label: "LEADS / CONVERSATIONS", value: "3,530 " },
+  { label: "COST / RESULT", value: "24.84 QAR" },
+  { label: "AD SPEND", value: "87,689.60 QAR" }
+],
+      
+
+
+      learning:"“In high-consideration real estate, reducing uncertainty can matter more than adding information. When prospects want to see the place before starting a conversation, showing the real experience can make the first step easier and more efficient.”",
+creatives:[
+  { tag:"Creative A", image:"marasm 1.png" },
+  { tag:"Creative B", image:"marasm 2.png" },
+  { tag:"Creative C", image:"marasm 3.png" },
+],
+
+
+
+
+
+
+    },
+    {
+      id:"cs-02",
+      category:"medical",
+      client:"AL NAWRAS MEDICAL CENTER",
+      industry:"Medical ",
+      market:"Qatar",
+      cardImage:"Gemini_Generated_Image_ (2).jpeg",
+      headline:"“ QAR 238K in ad spend generated 15,509 results at QAR 15.34 per result. ”",
+      objective:"[ Generate efficient lead volume across multiple aesthetic services. ]",
+      problem:"[ Multiple services, different customer motivations, and no single message could fit every offer. ]",
+
+
+
+      
+
+      metrics: [
+  { label: "Leads / Conversations", value: "3,156" },
+  { label: "Cost / Result", value: "16.29 QAR" },
+  { label: "Ad Spend", value: "51,400 QAR" }
+],
+
+      evidence1:{ caption:"[ Add caption ]", date:"[ Add date ]" },
+      discovery:"[The key question wasn't “Which service should we advertise?”It was “What gives each offer a reason to act?”]",
+
+
+        hypothesis:"[ What you believed would happen, and why. ]",
+      decision:"[ What you decided to do. ]",
+      strategy:"[ This led us to test different demand angles across the creative mix — rather than treating every service the same]",
+      execution:"[ The creative wasn't just communicating the service. It was addressing a different reason for actio ]",
+      evidence2:{ image:"WhatsApp Image 2026-10-17 at 4.16.58 PM.jpeg", caption:"", date:"" },
+
+ results: [
+  { label: "LEADS / CONVERSATIONS", value: "3,156 " },
+  { label: "COST / RESULT", value: "16.29 QAR" },
+  { label: "AD SPEND", value: "51,400 QAR" }
+],
+      
+      learning:"[Performance starts with understanding what drives the action — then turning that insight into something measurable.]",
+
+ creatives:[
+  { tag:"Creative A", image:"WhatsApp Image 2026-10-17 at 4.09.36 PM.jpeg" },
+  { tag:"Creative B", image:"WhatsApp Image 2026-10-17 at 4.16.08 PM.jpeg" },
+  { tag:"Creative C", image:"WhatsApp Image 2026-10-17 at 4.16.25 PM.jpeg" },
+],
+
+
+
+    },
+  {
+      id:"cs-03",
+      category:"medical",
+      client:"DR.Enass",
+
+      industry:"Medical",
+      market:"Qatar",
+      cardImage:"Gemini_Generated_Image_ (1).jpeg",
+      headline:"“From static before-and-after posts to a repeatable content system that generated 3,156 conversations at an average cost of QAR 16.29.”",
+
+      objective:"[ Generate a consistent flow of qualified conversations while building demand around Dr. Enas's strongest differentiators: natural results, precision, and a gentle touch. ]",
+      problem:"[ The account initially relied heavily on static before-and-after content. Video content existed, but it was limited and inconsistent. The challenge was to discover which content angles could turn the doctor's expertise and patient experience into scalable conversation drivers.]",
+
+ 
+     
+      
+
+      metrics: [
+  { label: "Leads / Conversations", value: "3,156" },
+  { label: "Cost / Result", value: "16.29 QAR" },
+  { label: "Ad Spend", value: "51,400 QAR" }
+],
+      evidence1:{ caption:"[ Add caption ]", date:"[ Add date ]" },
+discovery: "What did the data reveal? The strongest signals were not tied to one service. They repeatedly appeared around three things: visible transformation, authentic patient experiences, and a clear promise of natural-looking results.",
+      hypothesis:"[ If we shifted from simply showing results to showing the experience, the transformation, and Dr. Enas's unique touch, we could create stronger reasons for prospects to start a conversation.",
+
+      decision:"[We moved beyond static before-and-after content and prioritized real patient stories, treatment footage, transformation-led hooks, and content built around Dr. Enas's “gentle touch” USP. ]",
+
+
+      strategy:"[Build demand around proof, emotion, and a recognizable treatment philosophy — then let the strongest content earn more budget. ]",
+
+      execution:"[We continuously tested different creative angles, identified recurring winners, reused proven concepts across different periods, and scaled budget around ads that demonstrated efficient conversation generation]",
+      evidence2:{ image:"enass.png", caption:"", date:"" },
+
+
+      results: [
+  { label: "LEADS / CONVERSATIONS", value: "3,156" },
+  { label: "COST / RESULT", value: "16.29 QAR" },
+  { label: "AD SPEND", value: "51,400 QAR" }
+],
+
+learning:"The biggest learning was that performance came from turning Dr. Enas's real-world value into repeatable content signals — not simply producing more ads.",
+learningSignals:[
+  { num:"01", title:"Proof", text:"Real patients and visible transformations reduced the distance between the ad and the actual experience." },
+  { num:"02", title:"USP", text:"\"Gentle touch\" became more than a claim when patients themselves communicated it." },
+  { num:"03", title:"Repeatability", text:"When a creative concept won more than once, it became a signal worth testing and scaling — not a one-off result." }
+],
+
+
+creatives:[
+  { tag:"Creative A", image:"enass creative 1.png" },
+  { tag:"Creative B", image:"enass creative 2.png" },
+  { tag:"Creative C", image:"enass creative 3.png" },
+],
+
+
+
+    },
+    {
+      id:"cs-04",
+      category:"medical",
+      client:"DR. FERAS",
+      industry:"medical",
+      market:"Qatar",
+      cardImage:"Gemini_Generated_Image_eqfuwweqfuwweqfu.jpeg",
+      headline:"“When the decision is surgical, the ad has to sell confidence before it sells the procedure.”",
+
+      objective:"[ Generate qualified conversations that could lead to real consultations for liposuction, rather than simply maximizing message volume. ]",
+      problem:"[ Liposuction is a high-consideration service. Prospects are not only evaluating the procedure — they are evaluating the expected result, safety, recovery, and trust in the doctor. ]",
+
+
+    
+      metrics:[ {label:"Leads / Conversations", value:"2,507"}, {label:"Cost per Result", value:" 25.92 QAR"}, {label:"Ad spend", value:" 65.000 QAR"} ],
+      evidence1:{ caption:"[ Add caption ]", date:"[ Add date ]" },
+      discovery:"[ What did the data reveal? The real barrier was not simply awareness of liposuction. Prospects needed different reasons to start a conversation — from seeing the potential transformation to understanding the problem and building trust in the doctor. ]",
+      hypothesis:"[If each creative addressed a different decision barrier, the campaign could attract prospects at different stages of consideration while giving them a stronger reason to start a conversation. ]",
+
+      decision:"[ We structured the messaging around three core decision angles: Transformation, Problem Awareness, and Trust. ]",
+
+
+      strategy:"[ Instead of selling the procedure itself, we built the conversation around what the prospect actually needs to feel confident about: the result, the problem, and the doctor. ]",
+
+      execution:"[ We used a Messaging Campaign and a Lead Form, with each creative designed to capture leads or open conversations from a different angle based on the prospect's concern.]",
+      evidence2:{ image:"WhatsApp Image 2026-10-16 at 5.34.25 PM.jpeg", caption:"", date:"" },
+
+ results: [
+  { label: "LEADS / CONVERSATIONS", value: "2507" },
+  { label: "COST / RESULT", value: " 25.92 QAR" },
+  { label: "AD SPEND", value: "65.000  QAR" }
+],
+
+
+     
+      learning:"[ For high-consideration medical services, the job of the ad is not to close the sale. It is to reduce uncertainty enough for the right prospect to start the conversation ]",
+ 
+
+creatives:[
+  { tag:"Creative A", image:"WhatsApp Image 2026-10-16 at 5.30.51 PM.jpeg" },
+  { tag:"Creative B", image:"WhatsApp Image 2026-10-16 at 5.33.21 PM.jpeg" },
+  { tag:"Creative C", image:"WhatsApp Image 2026-10-16 at 5.33.43 PM.jpeg" },
+],
+
+
+    
+  
+
+
+
+
+    },
+    {
+      id:"cs-05",
+      category:"services",
+      client:"LUXURY CLEANING",
+      industry:"Services",
+      market:"Qatar",
+      cardImage:"luxury.jpg.jpeg",
+      headline:"“[ QAR 5.4K in ad spend generated 252 conversations at QAR 21.56 per conversation. ]”",
+      objective:"[ Generate a steady flow of customer conversations across multiple cleaning and home-service offers.]",
+      problem:"[The business offered several services with very different customer needs — from cleaning and disinfection to AC and camping cabin preparation. ]",
+      
+
+
+      metrics: [
+        { label: "LEADS/Conversations", value: "252" },
+        { label: "Cost / Conversation", value: "21.56 QAR" },
+        { label: "Ad Spend", value: "5,400 QAR" }
+      ],
+      evidence1:{ caption:"", date:"" },
+
+      discovery:"[ The data showed that performance was not only about the service itself — the offer and the way the need was presented mattered. ]",
+      evidence2:{ image:"WhatsApp Image 2026-10-27 at 11.26.25 PM (1).jpeg", caption:"", date:"" },
+
+
+      hypothesis:"[ If each service was presented around a clear customer need, the ads could create a stronger reason to start a conversation. ]",
+      decision:"[ We focused the creative mix around clear, easy-to-understand service propositions rather than communicating the business as one generic cleaning service. ]",
+execution:"Examples:\nCamping Cabin Preparation — {{جهّز كبينتك لموسم التخييم مقابل 350 ريال.}}\nHome Cleaning & Disinfection — {{خدمة شاملة تبدأ من 350 ريال.}}\nPrivate Chef Service — {{شيف متخصص في خدمتك داخل منزلك.}}",
+      results: [
+        { label: "CONVERSATIONS", value: "252" },
+        { label: "COST / CONVERSATION", value: "21.56 QAR" },
+        { label: "AD SPEND", value: "5,400 QAR" }
+      ],
+      learning:"“When a business offers multiple services, performance starts with making each customer need easy to understand — not simply advertising the business as a whole.”",
+      creatives:[]
+    },
+    
+
+    {
+
+
+      id:"cs-06",
+      category:"e-commerce",
+      client:"ZEINA BEAUTY",
+      industry:"e-commerce",
+      market:"Egypt",
+      cardImage:"675182982_122093789636581333_4874532624851898880_n.jpg.jpeg",
+      headline:"“[ The audience wasn't the problem. The offer was. ]”",
+      objective:"[ Validate demand and generate profitable sales for a newly launched beauty brand.]",
+      problem:"[ As a new brand, Zeina Beauty had limited market history and no established performance benchmark to rely on. ]",
+
+      evidence2:{ image:"WhatsApp Image 2026-10-27 at 11.26.14 PM (2).jpeg", caption:"", date:"" },
+
+      metrics: [
+        { label: "Store Revenue", value: "   171.900EGP" },
+        { label: "POAS", value: "6.25X" },
+        { label: "Ad Spend", value: " 27.500EGP" }
+      ],
+      evidence1:{ caption:"", date:"" },
+      discovery:"[The early performance showed that the market could respond to the product when the value proposition was strong enough.]",
+      hypothesis:"[If we strengthened the offer around a clear product bundle, tangible value, and a reason to buy now, we could convert existing demand more efficiently. ]",
+      decision:"[ We shifted the focus from simply promoting individual products to communicating a stronger purchase proposition. ]",
+      strategy:"[ Build the offer around bundles, perceived value, and purchase incentives rather than relying on product exposure alone.]",
+      execution:"[ The creative mix highlighted the product experience, bundle value, family-size proposition, and purchase incentives such as free shipping.THE EXECUTION. ]",
+      results: [
+        { label: "Store Revenue", value: "   171.900EGP" },
+        { label: "POAS", value: "6.25X" },
+        { label: "AD SPEND", value: "27.500EGP" }
+      ],
+      learning:"[ “For a new brand, performance isn't only about finding the right audience. It's about finding an offer strong enough to turn attention into a purchase.” ]",
+      creatives:[]
+    }
+  ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  var listEl = document.getElementById('caseStudyList');
+  caseStudies.forEach(function(cs, i){
+    var num = String(i+1).padStart(2,'0');
+    var card = document.createElement('article');
+    card.className = 'cs-card reveal';
+    card.dataset.category = cs.category;
+    card.innerHTML =
+'<div class="cs-media"><span class="cs-num">'+num+'</span>' +
+  (cs.cardImage
+    ? '<img class="cs-img" src="'+cs.cardImage+'" alt="'+cs.client+'">'
+    : '<canvas class="cs-canvas"></canvas>') +
+'</div>' +
+
+
+
+      '<div class="cs-info">' +
+        '<span class="label-muted">'+cs.industry+'</span><span class="label-muted">'+cs.market+'</span>' +
+        '<h3>'+cs.client+'</h3>' +
+        '<p class="cs-objective">'+cs.objective+'</p>' +
+
+
+
+
+
+        
+        '<button class="cs-open" data-open="'+cs.id+'">View case study →</button>' +
+      '</div>';
+    listEl.appendChild(card);
+  });
+
+  document.querySelectorAll('.cs-canvas').forEach(function(cv){
+    var ctx = cv.getContext('2d');
+    function draw(){
+      var w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(window.devicePixelRatio||1,2);
+      cv.width = w*dpr; cv.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.clearRect(0,0,w,h);
+      ctx.beginPath();
+      var pts = 7, arr = [];
+      for(var i=0;i<pts;i++){ arr.push(0.3 + Math.random()*0.5 + (i/pts)*0.3); }
+      arr.forEach(function(v,i){
+        var x = (i/(pts-1))*w, y = h - v*h*0.7 - h*0.1;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle = '#0B8055'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+    draw();
+    window.addEventListener('resize', draw);
+  });
+
+  var overlay = document.getElementById('csOverlay');
+
+  function openCaseStudy(id){
+    var cs = caseStudies.find(function(c){ return c.id === id; });
+    if(!cs) return;
+
+    document.getElementById('cs-industry').textContent = cs.industry;
+    document.getElementById('cs-market').textContent = cs.market;
+    document.getElementById('cs-client').textContent = cs.client;
+    document.getElementById('cs-headline').textContent = cs.headline;
+    document.getElementById('cs-objective').textContent = cs.objective;
+    document.getElementById('cs-problem').textContent = cs.problem;
+    document.getElementById('cs-metrics').innerHTML = cs.metrics.map(function(m){
+      return '<div class="cs-metric"><div class="val">'+m.value+'</div><div class="label-muted" style="margin-top:8px;">'+m.label+'</div></div>';
+    }).join('');
+
+    document.getElementById('cs-discovery').textContent = cs.discovery;
+    document.getElementById('cs-insight').textContent = cs.insight || '';
+document.getElementById('cs-insight-step').style.display = cs.insight ? '' : 'none';
+    document.getElementById('cs-hypothesis').textContent = cs.hypothesis;
+    document.getElementById('cs-decision').textContent = cs.decision;
+document.getElementById('cs-strategy').textContent = cs.strategy || '';
+var stratStep = document.querySelector('.chain-step[data-field="strategy"]');
+if(stratStep) stratStep.style.display = (cs.strategy && String(cs.strategy).trim()) ? '' : 'none';
+
+
+
+    var execEl = document.getElementById('cs-execution');
+var safe = String(cs.execution || '')
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+execEl.innerHTML = safe
+  .replace(/\{\{(.*?)\}\}/g, '<span class="ar" dir="rtl">$1</span>')
+  .replace(/\n/g, '<br>');
+
+    document.getElementById('cs-creatives').innerHTML = (cs.creatives || []).map(function(c){
+      return '<div class="creative-card">'+
+               '<span class="label cc-tag">'+c.tag+'</span>'+
+               '<div class="cc-surface"><img src="'+c.image+'" alt="'+c.tag+'"></div>'+
+             '</div>';
+    }).join('');
+
+    var evFrame = document.getElementById('cs-ev2-frame');
+    var evImg = document.getElementById('cs-ev2-image');
+    if(cs.evidence2 && cs.evidence2.image){
+      evImg.src = cs.evidence2.image;
+      evFrame.style.display = 'block';
+    } else {
+      evFrame.style.display = 'none';
+    }
+    document.getElementById('cs-ev2-caption').textContent = (cs.evidence2 && cs.evidence2.caption) || '';
+    document.getElementById('cs-ev2-date').textContent = (cs.evidence2 && cs.evidence2.date) || '';
+
+    document.getElementById('cs-results').innerHTML = cs.results.map(function(r){
+      return '<div class="r-item"><div class="val">'+r.value+'</div><div class="label-muted" style="margin-top:6px;">'+r.label+'</div></div>';
+    }).join('');
+
+    document.getElementById('cs-learning').textContent = cs.learning;
+    document.getElementById('cs-learning-signals').innerHTML = (cs.learningSignals || []).map(function(s){
+      return '<div class="learning-signal">'+
+               '<div class="ls-tag"><span class="ls-num">'+s.num+'</span><span class="ls-title">'+s.title+'</span></div>'+
+               '<p>'+s.text+'</p>'+
+             '</div>';
+    }).join('');
+
+    document.querySelectorAll('.cs-screens button').forEach(function(b,i){ b.classList.toggle('active', i===0); });
+    document.querySelectorAll('.cs-screen').forEach(function(p,i){ p.classList.toggle('active', i===0); });
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  document.addEventListener('click', function(e){
+    var openBtn = e.target.closest('[data-open]');
+    if(openBtn){ openCaseStudy(openBtn.dataset.open); }
+  });
+  document.querySelectorAll('[data-close]').forEach(function(btn){
+    btn.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow = ''; });
+  });
+  document.querySelectorAll('.cs-screens button').forEach(function(btn, idx){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.cs-screens button').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+      document.querySelectorAll('.cs-screen').forEach(function(p,i){ p.classList.toggle('active', i===idx); });
+
+
+overlay.scrollTo({ top:0, behavior: reduced?'auto':'smooth' });
+
+    });
+  });
+
+  var filterButtons = document.querySelectorAll('#filterRow button');
+  filterButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterButtons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      document.querySelectorAll('.cs-card').forEach(function(card){
+        var match = f==='all' || card.dataset.category===f;
+        card.classList.toggle('hidden-by-filter', !match);
+      });
+    });
+  });
+
+  (function loader(){
+    var stepEl = document.getElementById('loaderStep');
+    var fillEl = document.getElementById('loaderBarFill');
+    var loaderEl = document.getElementById('loader');
+    var steps = ['01','02','03','04','05'];
+    var i = 0;
+    document.body.style.overflow = 'hidden';
+    var interval = reduced ? 10 : 190;
+    var t = setInterval(function(){
+      i++;
+      if(i < steps.length){ stepEl.textContent = steps[i]; fillEl.style.width = ((i+1)/steps.length*100)+'%'; }
+      else{
+        clearInterval(t);
+        setTimeout(function(){
+          loaderEl.classList.add('done');
+          document.body.style.overflow = '';
+          if(window.gsap) playHeroIntro();
+        }, 200);
+      }
+    }, interval);
+  })();
+
+  if(!isTouch){
+    var dot = document.getElementById('cursorDot');
+    var ring = document.getElementById('cursorRing');
+    var lbl = document.getElementById('cursorLabel');
+    var mx=0,my=0,rx=0,ry=0;
+    window.addEventListener('mousemove', function(e){
+      mx=e.clientX; my=e.clientY;
+      dot.style.transform = 'translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+    });
+    (function tick(){
+      rx += (mx-rx)*0.28; ry += (my-ry)*0.28;
+      ring.style.transform = 'translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    })();
+    document.addEventListener('mouseover', function(e){
+      var t = e.target.closest('[data-open], .cs-media, .evidence-surface, .cc-surface');
+      var link = e.target.closest('a, button');
+      if(t){ ring.classList.add('is-active'); lbl.textContent = 'VIEW'; }
+      else if(link){ ring.classList.add('is-active'); lbl.textContent=''; }
+      else { ring.classList.remove('is-active'); lbl.textContent=''; }
+    });
+  }
+
+  if(!isTouch){
+    document.querySelectorAll('.magnetic').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        el.style.transform = 'translate('+((e.clientX-(r.left+r.width/2))*0.25)+'px,'+((e.clientY-(r.top+r.height/2))*0.3)+'px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform='translate(0,0)'; });
+    });
+  }
+
+  (function signalCanvas(){
+    var canvas = document.getElementById('signalCanvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var w,h,dpr = Math.min(window.devicePixelRatio||1,2);
+    var nodes = [];
+    var mouseX = 0.5, mouseY = 0.5;
+
+    function resize(){
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w*dpr; canvas.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    window.addEventListener('resize', resize); resize();
+
+    for(var i=0;i<18;i++){
+      nodes.push({ x:Math.random(), y:Math.random(), vx:(Math.random()-.5)*0.0009, vy:(Math.random()-.5)*0.0009 });
+    }
+    canvas.addEventListener('mousemove', function(e){
+      var r = canvas.getBoundingClientRect();
+      mouseX = (e.clientX-r.left)/r.width; mouseY = (e.clientY-r.top)/r.height;
+    });
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      nodes.forEach(function(n){
+        n.x += n.vx; n.y += n.vy;
+        if(n.x<0||n.x>1) n.vx*=-1; if(n.y<0||n.y>1) n.vy*=-1;
+      });
+      for(var i=0;i<nodes.length;i++){
+        for(var j=i+1;j<nodes.length;j++){
+          var a=nodes[i], b=nodes[j];
+          var dx=(a.x-b.x)*w, dy=(a.y-b.y)*h;
+          var dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist < 130){
+            ctx.strokeStyle = 'rgba(11,128,85,'+(0.12*(1-dist/130))+')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x*w,a.y*h); ctx.lineTo(b.x*w,b.y*h); ctx.stroke();
+          }
+        }
+        var mdx = (mouseX-nodes[i].x)*w, mdy=(mouseY-nodes[i].y)*h;
+        var mdist = Math.sqrt(mdx*mdx+mdy*mdy);
+        if(mdist < 160){
+          ctx.strokeStyle = 'rgba(236,235,230,'+(0.10*(1-mdist/160))+')';
+          ctx.beginPath(); ctx.moveTo(nodes[i].x*w,nodes[i].y*h); ctx.lineTo(mouseX*w,mouseY*h); ctx.stroke();
+        }
+      }
+      nodes.forEach(function(n){
+        ctx.beginPath(); ctx.arc(n.x*w, n.y*h, 2, 0, Math.PI*2);
+        ctx.fillStyle = '#ECEBE6'; ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    if(!reduced){ requestAnimationFrame(draw); }
+    else {
+      draw();
+    }
+  })();
+
+  var nav = document.getElementById('siteNav');
+  var sections = ['home','work','about','thinking','contact'].map(function(id){ return document.getElementById(id); });
+  var navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    var doc = document.documentElement;
+    document.getElementById('scroll-progress').style.width = (doc.scrollTop/(doc.scrollHeight-doc.clientHeight)*100)+'%';
+    var current = sections[0];
+    sections.forEach(function(s){ if(s && window.scrollY >= s.offsetTop-160) current = s; });
+    navLinks.forEach(function(a){ a.classList.toggle('active', current && a.dataset.target===current.id); });
+  });
+
+  document.getElementById('back-to-top').addEventListener('click', function(){ window.scrollTo({top:0, behavior: reduced?'auto':'smooth'}); });
+ document.getElementById('year').textContent = '© '+new Date().getFullYear()+' Ismail Zidan';
+
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('.submit-btn');
+    var original = btn.textContent;
+    btn.textContent = 'Sending...';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res){
+      if(res.ok){
+        btn.textContent = 'Message sent ✓';
+        form.reset();
+      } else {
+        btn.textContent = 'Something went wrong — try again';
+      }
+      setTimeout(function(){ btn.textContent = original; }, 4000);
+    }).catch(function(){
+      btn.textContent = 'Something went wrong — try again';
+      setTimeout(function(){ btn.textContent = original; }, 4000);
+    });
+  });
+
+  function playHeroIntro(){
+    gsap.timeline()
+      .to('.hero h1', {opacity:1,y:0,duration:.9,ease:'power3.out'},0)
+      .to('.hero-statement', {opacity:1,y:0,duration:.8,ease:'power3.out'},0.15)
+      .to('.hero-actions', {opacity:1,y:0,duration:.8,ease:'power3.out'},0.3);
+  }
+  if(window.gsap && window.ScrollTrigger && !reduced){
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if(el.closest('.hero')) return;
+      ScrollTrigger.create({ trigger:el, start:'top 88%', onEnter:function(){ el.classList.add('is-visible'); } });
+    });
+    var st = document.querySelector('.statement h2');
+    if(st){
+      var words = st.textContent.trim().split(/\s+/);
+      st.innerHTML = words.map(function(w){ return '<span class="split-line"><span class="split-word">'+w+'&nbsp;</span></span>'; }).join('');
+      ScrollTrigger.create({ trigger:st, start:'top 80%', onEnter:function(){ gsap.to(st.querySelectorAll('.split-word'), {y:0,opacity:1,duration:.7,stagger:.03,ease:'power3.out'}); } });
+    }
+    document.querySelectorAll('.cs-card.reveal').forEach(function(el){
+      ScrollTrigger.create({ trigger:el, start:'top 90%', onEnter:function(){ el.classList.add('is-visible'); } });
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    ['.hero h1','.hero-statement','.hero-actions'].forEach(function(s){ var e=document.querySelector(s); if(e) e.style.opacity=1; });
+  }
+})();
+</script>
+</body>
+</html>
